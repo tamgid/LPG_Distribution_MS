@@ -1,0 +1,19 @@
+.my-table {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 3rem;
+    height: auto;
+}
+
+.pad {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+
