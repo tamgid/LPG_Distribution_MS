@@ -1,8 +1,16 @@
-import React from 'react'
-import useConditionalNavigate from './navigationUtils'; 
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 
-function Accounts(props) {
-  useConditionalNavigate(props.userName === "", "/");
+function Accounts() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
   return (
     <div>
       Hello from accounts

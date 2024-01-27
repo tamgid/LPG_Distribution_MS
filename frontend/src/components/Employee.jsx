@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState} from "react";
-import {NavLink} from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./Employee.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Alert from "./Alert";
@@ -23,10 +23,13 @@ function Employee(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (props.userName === "") {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
       navigate("/");
     }
-  }, [props.userName, navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     axios
@@ -777,12 +780,11 @@ function Employee(props) {
       </div>
       <div className="addButton4">
         <NavLink className="nav-link" to="/home/addEmployee">
-          <button
-            className="btn btn-success"
-            type="submit"
-            onClick={() => {}}
-          >
-            <i className="fa fa-plus-circle" aria-hidden="true"> Add Employee</i>
+          <button className="btn btn-success" type="submit" onClick={() => {}}>
+            <i className="fa fa-plus-circle" aria-hidden="true">
+              {" "}
+              Add Employee
+            </i>
           </button>
         </NavLink>
       </div>

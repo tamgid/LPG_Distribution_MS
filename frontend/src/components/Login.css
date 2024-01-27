@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+
 .page-container {
     position: fixed; /* or "absolute" depending on your layout */
     top: 0;

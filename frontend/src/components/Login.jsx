@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Login.css";
 import axios from "axios";
@@ -26,19 +26,8 @@ function Login(props) {
       .post("http://localhost:3001/login", data)
       .then((res) => {
         if (res.data.Status === "Success") {
-          axios
-            .get("http://localhost:3001/addCookie")
-            .then((res) => {
-              if (res.data.Status === "Success") {
-                props.setName(res.data.Name);
-                if (res.data.Name) {
-                  navigate("/home");
-                }
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          localStorage.setItem("isAuthenticated", "true");
+          navigate("/home");
         } else {
           console.log(res.data.Error);
           setAlert(true);
@@ -111,9 +100,9 @@ function Login(props) {
             >
               Log in
             </button>
-            <div className="text-center pt-3 text-muted">
+            {/* <div className="text-center pt-3 text-muted">
               Not a member? <NavLink to="/register">Sign up</NavLink>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

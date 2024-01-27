@@ -3,10 +3,19 @@ import axios from "axios";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./ListPurchases.css";
 import Alert from "./Alert";
-import useConditionalNavigate from './navigationUtils'; 
+import { useNavigate } from "react-router-dom";
 
 function ListPurchases(props) {
-  useConditionalNavigate(props.userName === "", "/");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [selectedPurchase, setSelectedPurchase] = useState(null);
@@ -63,22 +72,22 @@ function ListPurchases(props) {
         console.log(err);
       });
 
-      axios
-    .get("http://localhost:3001/getProduct")
-    .then((res) => {
-      if (res.data.Status === "Success") {
-        setProduct(res.data.result);
-      //  console.log(product);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, [searchOn,product]);
+    axios
+      .get("http://localhost:3001/getProduct")
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          setProduct(res.data.result);
+          //  console.log(product);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [searchOn, product]);
 
   const handleSearch = () => {
     setSearchOn(true);
-    
+
     // if(startDate===null)
     // {
     //   setStartDate(new Date())
@@ -399,7 +408,15 @@ function ListPurchases(props) {
         </Modal>
       </div>
       <div className="search-bar">
-        <p style={{fontFamily: 'sans-serif',fontSize:'25px', fontWeight: '3px'}}>LIST OF ALL PURCHASES</p>
+        <p
+          style={{
+            fontFamily: "sans-serif",
+            fontSize: "25px",
+            fontWeight: "3px",
+          }}
+        >
+          LIST OF ALL PURCHASES
+        </p>
         <div className="row mb-4">
           <div className="col">
             <label>From Date:</label>

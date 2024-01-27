@@ -2,13 +2,21 @@ import React, { useEffect, useState, useRef } from "react";
 import "./AddPurchases.css";
 import axios from "axios";
 import Alert from "./Alert";
-import useConditionalNavigate from './navigationUtils'; 
+import { useNavigate } from "react-router-dom";
 
+function PurchaseForm() {
+  const navigate = useNavigate();
 
-function PurchaseForm(props) {
-  useConditionalNavigate(props.userName === "", "/");
-  const [showAlert, setShowAlert] = useState(false)
-  const [showWarning, setShowWarning] = useState(false)
+  useEffect(() => {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [formData, setFormData] = useState({
     supplier: "",
@@ -106,12 +114,11 @@ function PurchaseForm(props) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    if(inputValue.length === 0)
-    {
-      setShowWarning(true)
+    if (inputValue.length === 0) {
+      setShowWarning(true);
       setTimeout(() => {
-        setShowWarning(false)
-      },3000)
+        setShowWarning(false);
+      }, 3000);
     }
     const amount = inputRef.current.value;
     const updatedFormData = {
@@ -124,13 +131,13 @@ function PurchaseForm(props) {
       .post("http://localhost:3001/addPurchase", updatedFormData)
       .then((res) => {
         if (res.data.Status === "Success") {
-          setShowAlert(true)
+          setShowAlert(true);
           setTimeout(() => {
-            setShowAlert(false)
-          },3000)
+            setShowAlert(false);
+          }, 3000);
           setTimeout(() => {
             window.location.reload();
-          },3500)
+          }, 3500);
         }
       })
       .catch((err) => {
@@ -305,8 +312,15 @@ function PurchaseForm(props) {
               ref={inputRef}
             />
           </div>
-          {showAlert && <Alert type='success' message='Purchase Data Inserted Successfully'/>}
-          {showWarning && <Alert type='warning' message={`You didn't select any product`}/>}
+          {showAlert && (
+            <Alert
+              type="success"
+              message="Purchase Data Inserted Successfully"
+            />
+          )}
+          {showWarning && (
+            <Alert type="warning" message={`You didn't select any product`} />
+          )}
           <button
             className="btn btn-primary"
             type="submit"

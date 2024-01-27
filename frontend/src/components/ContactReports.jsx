@@ -1,13 +1,18 @@
-import React from 'react'
-import useConditionalNavigate from './navigationUtils'; 
+import React, {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 
-function ContactReports(props) {
-  useConditionalNavigate(props.userName === "", "/");
-  return (
-    <div>
-      Hello from Contact Report
-    </div>
-  )
+function ContactReports() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
+  return <div>Hello from Contact Report</div>;
 }
 
-export default ContactReports
+export default ContactReports;

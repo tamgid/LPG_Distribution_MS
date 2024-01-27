@@ -3,17 +3,25 @@ import React, { useEffect, useState } from "react";
 import "./Product.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Alert from "./Alert";
-import { NavLink } from "react-router-dom"
-import useConditionalNavigate from './navigationUtils'; 
+import { NavLink, useNavigate } from "react-router-dom";
 
-function Product(props) {
+function Product() {
   const [data, setData] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
-  useConditionalNavigate(props.userName === "", "/");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     axios
@@ -68,7 +76,7 @@ function Product(props) {
 
   const updateData = (e) => {
     e.preventDefault();
-    console.log(selectedProduct);
+    //console.log(selectedProduct);
     axios
       .put(
         "http://localhost:3001/updateProduct/" + selectedProduct.product_id,
@@ -105,7 +113,8 @@ function Product(props) {
                       Product Name:
                     </label>
                     <select
-                      className="form-select" aria-label="Default select example"
+                      className="form-select"
+                      aria-label="Default select example"
                       value={selectedProduct.product_name}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -146,7 +155,8 @@ function Product(props) {
                       Product Type:
                     </label>
                     <select
-                      className="form-select" aria-label="Default select example"
+                      className="form-select"
+                      aria-label="Default select example"
                       value={selectedProduct.product_type}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -170,7 +180,8 @@ function Product(props) {
                       Product Category:
                     </label>
                     <select
-                      className="form-select" aria-label="Default select example"
+                      className="form-select"
+                      aria-label="Default select example"
                       value={selectedProduct.product_category}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -189,35 +200,12 @@ function Product(props) {
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label htmlFor="lastName" className="form-label">
-                      Unit:
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastName"
-                      name="last_name"
-                      value={selectedProduct.unit}
-                      onChange={(e) =>
-                        setSelectedProduct({
-                          ...selectedProduct,
-                          unit: e.target.value,
-                        })
-                      }
-                      autoComplete="off"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="mb-3">
                     <label htmlFor="firstName" className="form-label">
                       Brand:
                     </label>
                     <select
-                      className="form-select" aria-label="Default select example"
+                      className="form-select"
+                      aria-label="Default select example"
                       value={selectedProduct.brand}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -231,26 +219,47 @@ function Product(props) {
                     </select>
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <div className="mb-3">
-                    <label htmlFor="lastName" className="form-label">
-                      Quantity:
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastName"
-                      name="last_name"
-                      value={selectedProduct.quantity}
-                      onChange={(e) =>
-                        setSelectedProduct({
-                          ...selectedProduct,
-                          quantity: e.target.value,
-                        })
-                      }
-                      required
-                      autoComplete="off"
-                    />
+
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label htmlFor="lastName" className="form-label">
+                        Per Unit Purchasing Price :
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={selectedProduct.unit}
+                        onChange={(e) =>
+                          setSelectedProduct({
+                            ...selectedProduct,
+                            unit: e.target.value,
+                          })
+                        }
+                        autoComplete="off"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label htmlFor="lastName" className="form-label">
+                        Per Unit Selling Price:
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={selectedProduct.selling_price}
+                        onChange={(e) =>
+                          setSelectedProduct({
+                            ...selectedProduct,
+                            selling_price: e.target.value,
+                          })
+                        }
+                        required
+                        autoComplete="off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -305,12 +314,11 @@ function Product(props) {
       </div>
       <div className="addButton2">
         <NavLink className="nav-link" to="/home/addProducts">
-          <button
-            className="btn btn-success"
-            type="submit"
-            onClick={() => {}}
-          >
-            <i className="fa fa-plus-circle" aria-hidden="true"> Add Product</i>
+          <button className="btn btn-success" type="submit" onClick={() => {}}>
+            <i className="fa fa-plus-circle" aria-hidden="true">
+              {" "}
+              Add Product
+            </i>
           </button>
         </NavLink>
       </div>
@@ -321,9 +329,9 @@ function Product(props) {
               <th scope="col">Product Name</th>
               <th scope="col">Product Type </th>
               <th scope="col">Product Category</th>
-              <th scope="col">Unit</th>
               <th scope="col">Brand</th>
-              <th scope="col">Quantity</th>
+              <th scope="col">Purchasing Price</th>
+              <th scope="col">Selling Price</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -333,9 +341,10 @@ function Product(props) {
                 <th scope="row">{item.product_name}</th>
                 <td>{item.product_type}</td>
                 <td>{item.product_category}</td>
-                <td>{item.unit}</td>
                 <td>{item.brand}</td>
-                <td>{item.quantity}</td>
+                <td>{item.unit}</td>
+                <td>{item.selling_price}</td>
+
                 <td>
                   <div className="btn-group">
                     <button

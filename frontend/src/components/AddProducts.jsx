@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddProducts.css"; // Import your custom CSS for styling
 import Alert from "./Alert";
 import axios from "axios";
-import {NavLink} from "react-router-dom"
-import useConditionalNavigate from './navigationUtils'; 
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function AddProducts(props) {
-  useConditionalNavigate(props.userName === "", "/");
+function AddProducts() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
   const [formData, setFormData] = useState({
     product_name: "",
     product_type: "",
     product_category: "",
     unit: "",
+    selling_price: "",
     brand: "",
-    quantity: "",
   });
 
   const [alert, setAlert] = useState(false);
@@ -31,8 +40,8 @@ function AddProducts(props) {
             product_type: "",
             product_category: "",
             unit: "",
+            selling_price: "",
             brand: "",
-            quantity: "",
           });
           console.log("Successfully Inserted Data");
           setAlert(true);
@@ -53,7 +62,7 @@ function AddProducts(props) {
       <div className="addButton3">
         <NavLink className="nav-link" to="/home/products">
           <button className="btn btn-success" type="submit" onClick={() => {}}>
-          <i className="fa fa-list-ul" aria-hidden="true">
+            <i className="fa fa-list-ul" aria-hidden="true">
               {" "}
               List of Products
             </i>
@@ -81,24 +90,24 @@ function AddProducts(props) {
                     Please select
                   </option>
                   <option value="Omera 5.5 Kg Gas">Omera 5.5 Kg Gas</option>
-                  <option value="Omera 5.5 Kg Cylidner">
-                    Omera 5.5 Kg Cylidner
+                  <option value="Omera 5.5 Kg Cylinder">
+                    Omera 5.5 Kg Cylinder
                   </option>
                   <option value="Omera 12 Kg Gas">Omera 12 Kg Gas</option>
-                  <option value="Omera 12 Kg Cylidner">
-                    Omera 12 Kg Cylidner
+                  <option value="Omera 12 Kg Cylinder">
+                    Omera 12 Kg Cylinder
                   </option>
                   <option value="Omera 25 Kg Gas">Omera 25 Kg Gas</option>
-                  <option value="Omera 25 Kg Cylidner">
-                    Omera 25 Kg Cylidner
+                  <option value="Omera 25 Kg Cylinder">
+                    Omera 25 Kg Cylinder
                   </option>
                   <option value="Omera 35 Kg Gas">Omera 35 Kg Gas</option>
-                  <option value="Omera 35 Kg Cylidner">
-                    Omera 35 Kg Cylidner
+                  <option value="Omera 35 Kg Cylinder">
+                    Omera 35 Kg Cylinder
                   </option>
                   <option value="Omera 45 Kg Gas">Omera 45 Kg Gas</option>
-                  <option value="Omera 45 Kg Cylidner">
-                    Omera 45 Kg Cylidner
+                  <option value="Omera 45 Kg Cylinder">
+                    Omera 45 Kg Cylinder
                   </option>
                 </select>
               </div>
@@ -151,14 +160,32 @@ function AddProducts(props) {
             </div>
             <div className="col-md-6">
               <div className="mb-3">
+                <label htmlFor="firstName" className="form-label">
+                  Brand:
+                </label>
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  value={formData.brand}
+                  onChange={(e) =>
+                    setFormData({ ...formData, brand: e.target.value })
+                  }
+                >
+                  <option value="">Please Select</option>
+                  <option value="Omera">Omera</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="mb-3">
                 <label htmlFor="lastName" className="form-label">
-                  Unit Price:
+                  Per Unit Purchasing Price:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="lastName"
-                  name="last_name"
                   value={formData.unit}
                   onChange={(e) =>
                     setFormData({
@@ -171,39 +198,19 @@ function AddProducts(props) {
                 />
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="mb-3">
-                <label htmlFor="firstName" className="form-label">
-                  Brand:
-                </label>
-                <select
-                  class="form-select form-select-lg mb-3"
-                  aria-label=".form-select-lg example"
-                  value={formData.brand}
-                  onChange={(e) => setFormData({...formData, brand: e.target.value})}
-                >
-                  <option value="">Please Select</option>
-                  <option value="Omera">Omera</option>
-                </select>
-              </div>
-            </div>
             <div className="col-md-6">
               <div className="mb-3">
                 <label htmlFor="lastName" className="form-label">
-                  Quantity:
+                  Per Unit Selling price:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="lastName"
-                  name="last_name"
-                  value={formData.quantity}
+                  value={formData.selling_price}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      quantity: e.target.value,
+                      selling_price: e.target.value,
                     })
                   }
                   required

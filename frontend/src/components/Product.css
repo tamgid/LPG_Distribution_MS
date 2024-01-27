@@ -20,6 +20,7 @@
 .addButton2{
     display: flex;
     justify-content: flex-end;
+    margin-top: 1rem;
 }
 .table-head{
     background-color: green;

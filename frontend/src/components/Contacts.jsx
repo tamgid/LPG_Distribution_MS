@@ -1,21 +1,19 @@
-import React from 'react'
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import {useEffect} from 'react'
+import { useEffect } from "react";
 
-function Contacts(props) {
-
+function Contacts() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (props.userName === "") {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
       navigate("/");
     }
-  }, [props.userName, navigate]);
-  return (
-    <div>
-      Hello from contact
-    </div>
-  )
+  }, [navigate]);
+  return <div>Hello from contact</div>;
 }
 
-export default Contacts
+export default Contacts;

@@ -1,13 +1,18 @@
-import React from 'react'
-import useConditionalNavigate from './navigationUtils'; 
+import React, {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 
-function SellsSummary(props) {
-  useConditionalNavigate(props.userName === "", "/");
-  return (
-    <div>
-      Hello from sell summary
-    </div>
-  )
+function SellsSummary() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
+  return <div>Hello from sell summary</div>;
 }
 
-export default SellsSummary
+export default SellsSummary;

@@ -1,21 +1,19 @@
-import React from 'react'
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import {useEffect} from 'react'
+import { useEffect } from "react";
 
-function UserManagement(props) {
-
+function UserManagement() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (props.userName === "") {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
       navigate("/");
     }
-  }, [props.userName, navigate]);
-  return (
-    <div>
-      Hello from User Management
-    </div>
-  )
+  }, [navigate]);
+  return <div>Hello from User Management</div>;
 }
 
-export default UserManagement
+export default UserManagement;

@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useEffect} from 'react'
 
-function AddEmployee(props) {
+function AddEmployee() {
   const preset_key = "uploadimage";
   const cloud_name = "doh71p23w";
   const [data, setData] = useState({
@@ -29,10 +29,13 @@ function AddEmployee(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (props.userName === "") {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
       navigate("/");
     }
-  }, [props.userName, navigate]);
+  }, [navigate]);
 
   const handleInputChange = async (e) => {
     const file = e.target.files[0];

@@ -1,12 +1,18 @@
-import React from 'react'
-import useConditionalNavigate from './navigationUtils'; 
-function AddSale(props) {
-  useConditionalNavigate(props.userName === "", "/");
-  return (
-    <div>
-      Hello from Add Sale
-    </div>
-  )
+import React, {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+
+function AddSale() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Retrieve authentication status from localStorage
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
+  return <div>Hello from Add Sale</div>;
 }
 
-export default AddSale
+export default AddSale;
