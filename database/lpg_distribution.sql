@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2024 at 06:42 PM
+-- Generation Time: Jan 27, 2024 at 08:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,25 +65,24 @@ CREATE TABLE `product` (
   `product_category` varchar(50) NOT NULL,
   `unit` int(50) NOT NULL,
   `selling_price` int(50) NOT NULL,
-  `brand` varchar(50) NOT NULL,
-  `quantity` int(10) NOT NULL
+  `brand` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`product_id`, `product_name`, `product_type`, `product_category`, `unit`, `selling_price`, `brand`, `quantity`) VALUES
-(13, 'Omera 5.5 Kg Gas', 'single', 'Gas', 600, 650, 'Omera', 1),
-(14, 'Omera 5.5 Kg Cylidner', 'single', 'Cylinder', 800, 850, 'Omera', 1),
-(15, 'Omera 12 Kg Gas', 'single', 'Gas', 1200, 1250, 'Omera', 1),
-(16, 'Omera 12 Kg Cylidner', 'single', 'Cylinder', 1400, 1450, 'Omera', 1),
-(17, 'Omera 25 Kg Gas', 'single', 'Gas', 1500, 1550, 'Omera', 1),
-(18, 'Omera 25 Kg Cylidner', 'single', 'Cylinder', 1700, 1750, 'Omera', 1),
-(19, 'Omera 35 Kg Gas', 'single', 'Gas', 2000, 2050, 'Omera', 1),
-(20, 'Omera 35 Kg Cylidner', 'single', 'Cylinder', 2200, 2250, 'Omera', 1),
-(21, 'Omera 45 Kg Gas', 'single', 'Gas', 2500, 2550, 'Omera', 1),
-(22, 'Omera 45 Kg Cylidner', 'single', 'Cylinder', 2700, 2750, 'Omera', 1);
+INSERT INTO `product` (`product_id`, `product_name`, `product_type`, `product_category`, `unit`, `selling_price`, `brand`) VALUES
+(13, 'Omera 5.5 Kg Gas', 'single', 'Gas', 600, 650, 'Omera'),
+(14, 'Omera 5.5 Kg Cylinder', 'single', 'Cylinder', 800, 850, 'Omera'),
+(15, 'Omera 12 Kg Gas', 'single', 'Gas', 1200, 1250, 'Omera'),
+(16, 'Omera 12 Kg Cylinder', 'single', 'Cylinder', 1400, 1450, 'Omera'),
+(17, 'Omera 25 Kg Gas', 'single', 'Gas', 1500, 1550, 'Omera'),
+(18, 'Omera 25 Kg Cylinder', 'single', 'Cylinder', 1700, 1750, 'Omera'),
+(19, 'Omera 35 Kg Gas', 'single', 'Gas', 2000, 2050, 'Omera'),
+(20, 'Omera 35 Kg Cylinder', 'single', 'Cylinder', 2200, 2250, 'Omera'),
+(21, 'Omera 45 Kg Gas', 'single', 'Gas', 2500, 2550, 'Omera'),
+(22, 'Omera 45 Kg Cylinder', 'single', 'Cylinder', 2700, 2750, 'Omera');
 
 -- --------------------------------------------------------
 
