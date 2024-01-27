@@ -8,10 +8,6 @@ import Employee from './components/Employee';
 import Product from './components/Product';
 import Accounts from './components/Accounts';
 import ContactReports from './components/ContactReports';
-import StockTransfer from './components/StockTransfer';
-import StockAdjustment from './components/StockAdjustment';
-import Exchanges from './components/Exchanges';
-import CylinderTrack from './components/CylinderTrack';
 import Expanses from './components/Expanses';
 import Income from './components/Income';
 import Profile from './components/Profile';
@@ -42,27 +38,23 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Login/>} />
+          <Route path='/' element={<Login userName={userName} setName={setName}/>} />
           <Route path='/home' element={<Home userName={userName} setName={setName}/>}>
-            <Route path='/home/userManagement' element={<UserManagement />}></Route>
-            <Route path='/home/contacts' element={<Contacts />}></Route>
-            <Route path='/home/employee' element={<Employee />}></Route>
-            <Route path='/home/addEmployee' element={<AddEmployee />}></Route>
-            <Route path='/home/products' element={<Product />}></Route>
-            <Route path='/home/addProducts' element={<AddProducts />}></Route>
-            <Route path='/home/accounts' element={<Accounts />}></Route>
-            <Route path='/home/contactReports' element={<ContactReports />}></Route>
-            <Route path='/home/listPurchases' element={<ListPurchases />}></Route>
-            <Route path='/home/addPurchases' element={<AddPurchases />}></Route>
-            <Route path='/home/listSales' element={<ListSales />}></Route>
-            <Route path='/home/sellsSummary' element={<SellsSummary />}></Route>
-            <Route path='/home/addSale' element={<AddSale />}></Route>
-            <Route path='/home/stockTransfer' element={<StockTransfer />}></Route>
-            <Route path='/home/stockAdjustment' element={<StockAdjustment />}></Route>
-            <Route path='/home/exchange' element={<Exchanges />}></Route>
-            <Route path='/home/cylinder' element={<CylinderTrack />}></Route>
-            <Route path='/home/expanses' element={<Expanses />}></Route>
-            <Route path='/home/income' element={<Income />}></Route>
+            <Route path='/home/userManagement' element={<UserManagement userName={userName} />}></Route>
+            <Route path='/home/contacts' element={<Contacts userName={userName} />}></Route>
+            <Route path='/home/employee' element={<Employee userName={userName} />}></Route>
+            <Route path='/home/addEmployee' element={<AddEmployee userName={userName} />}></Route>
+            <Route path='/home/products' element={<Product userName={userName} />}></Route>
+            <Route path='/home/addProducts' element={<AddProducts userName={userName}/>}></Route>
+            <Route path='/home/accounts' element={<Accounts userName={userName} />}></Route>
+            <Route path='/home/contactReports' element={<ContactReports userName={userName} />}></Route>
+            <Route path='/home/listPurchases' element={<ListPurchases userName={userName} />}></Route>
+            <Route path='/home/addPurchases' element={<AddPurchases userName={userName} />}></Route>
+            <Route path='/home/listSales' element={<ListSales userName={userName} />}></Route>
+            <Route path='/home/sellsSummary' element={<SellsSummary userName={userName} />}></Route>
+            <Route path='/home/addSale' element={<AddSale userName={userName} />}></Route>
+            <Route path='/home/expanses' element={<Expanses userName={userName} />}></Route>
+            <Route path='/home/income' element={<Income userName={userName} />}></Route>
           </Route>
           <Route path='/profile' element={<Profile userName={userName}/>} />
           <Route path='/about' element={<About userName={userName}/>} />
