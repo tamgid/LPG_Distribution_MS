@@ -151,18 +151,17 @@ app.post('/addProduct', async(req, res) => {
     const product_name = req.body.product_name
     const product_type = req.body.product_type
     const product_category = req.body.product_category
-    const unit = parseInt(req.body.unit)
     const brand = req.body.brand
-    const quantity = parseInt(req.body.quantity)
+    const selling_price = req.body.selling_price
  
     await prisma.product.create({
       data: {
         product_name,
         product_type,
         product_category,
-        unit,
         brand,
-        quantity,
+        unit,
+        selling_price 
       },
     })
     return res.json({ Status: 'Success' });
@@ -236,7 +235,7 @@ app.put('/updateProduct/:id', async(req, res) => {
     const category = req.body.product_category
     const unit = parseInt(req.body.unit)
     const brand = req.body.brand
-    const quantity = parseInt(req.body.quantity)
+    const selling_price = parseInt(req.body.selling_price)
    
     const updatedProduct = await prisma.product.update({
       where: {
@@ -248,7 +247,7 @@ app.put('/updateProduct/:id', async(req, res) => {
         product_category: category,
         unit: unit,
         brand: brand,
-        quantity: quantity,
+        selling_price: selling_price,
       },
     });
     return res.status(200).json({Status: 'Success', result: updatedProduct})
