@@ -40,8 +40,8 @@ model product {
   product_type    String
   product_category String
   unit            Int
+  selling_price   Int
   brand           String
-  quantity        Int
 }
 
 model purchases {
