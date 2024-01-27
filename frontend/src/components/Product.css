@@ -1,11 +1,28 @@
 .my-table {
-    max-width: 900px;
+    /* max-width: 900px; */
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
+    border: 2px solid;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 3rem;
+    border-color: green;
+    margin-top: 1rem;
     height: auto;
+}
+
+.head{
+    border: 2px solid;
+    border-color: green;
+    margin-top: 2rem;
+    border-radius: 10px;
+    
+}
+
+.addButton2{
+    display: flex;
+    justify-content: flex-end;
+}
+.table-head{
+    background-color: green;
 }
 
 .pad {

@@ -1,6 +1,7 @@
 import React from 'react'
-
-function AddSale() {
+import useConditionalNavigate from './navigationUtils'; 
+function AddSale(props) {
+  useConditionalNavigate(props.userName === "", "/");
   return (
     <div>
       Hello from Add Sale

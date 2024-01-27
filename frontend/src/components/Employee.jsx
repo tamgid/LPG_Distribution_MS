@@ -1,11 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
+import {NavLink} from 'react-router-dom'
 import "./Employee.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Alert from "./Alert";
+import { useNavigate } from "react-router-dom";
+
 // import LoadingSpinner from "./LoadingSpinner";
 
-function Employee() {
+function Employee(props) {
   const preset_key = "uploadimage";
   const cloud_name = "doh71p23w";
   const [data, setData] = useState([]);
@@ -16,6 +19,14 @@ function Employee() {
   const [showAlert, setShowAlert] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.userName === "") {
+      navigate("/");
+    }
+  }, [props.userName, navigate]);
 
   useEffect(() => {
     axios
@@ -84,7 +95,7 @@ function Employee() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", preset_key);
-    setLoading(true)
+    setLoading(true);
     await axios
       .post(
         `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
@@ -99,7 +110,7 @@ function Employee() {
           ...selectedEmployee,
           employee_image: res.data.secure_url,
         });
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -356,11 +367,9 @@ function Employee() {
                       <label htmlFor="designation" className="form-label">
                         Designation:
                       </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="designation"
-                        name="designation"
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
                         value={selectedEmployee.designation}
                         onChange={(e) =>
                           setSelectedEmployee({
@@ -368,9 +377,26 @@ function Employee() {
                             designation: e.target.value,
                           })
                         }
-                        required
-                        autoComplete="off"
-                      />
+                      >
+                        <option disabled value="">
+                          Select Please
+                        </option>
+                        <option value="Manager">Manager</option>
+                        <option value="Operations Manager">
+                          Operations Manager
+                        </option>
+                        <option value="HR Manager">HR Manager</option>
+                        <option value="Accountants">Accountants</option>
+                        <option value="Customer Service Representatives">
+                          Customer Service Representatives
+                        </option>
+                        <option value="Sales Representatives:">
+                          Sales Representatives
+                        </option>
+                        <option value="Delivery Drivers">
+                          Delivery Drivers
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -380,11 +406,9 @@ function Employee() {
                       <label htmlFor="category" className="form-label">
                         Category:
                       </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="category"
-                        name="category"
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
                         value={selectedEmployee.category}
                         onChange={(e) =>
                           setSelectedEmployee({
@@ -392,9 +416,22 @@ function Employee() {
                             category: e.target.value,
                           })
                         }
-                        required
-                        autoComplete="off"
-                      />
+                      >
+                        <option disabled value="">
+                          Select Please
+                        </option>
+                        <option value="Managerial">Managerial</option>
+                        <option value="Finance Personel">
+                          Finance Personel
+                        </option>
+                        <option value="Customer Service">
+                          Customer Service
+                        </option>
+                        <option value="Sales and Marketing">
+                          Sales and Marketing
+                        </option>
+                        <option value="Field Worker">Field Worker</option>
+                      </select>
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -428,29 +465,20 @@ function Employee() {
                       </label>
                       <select
                         className="form-select"
-                        id="selectedOption"
-                        name="selectedOption"
-                        value={
-                          selectedEmployee.active_status === "on"
-                            ? "off"
-                            : selectedEmployee.active_status === "off"
-                            ? "on"
-                            : "off"
-                        }
-                        onChange={(e) =>
+                        aria-label="Default select example"
+                        value={selectedEmployee.active_status}
+                        onChange={(e) => {
                           setSelectedEmployee({
                             ...selectedEmployee,
-                            active_status:
-                              selectedEmployee.active_status === "on"
-                                ? "off"
-                                : selectedEmployee.active_status === "off"
-                                ? "on"
-                                : "off",
-                          })
-                        }
+                            active_status: e.target.value,
+                          });
+                        }}
                       >
-                        <option value="off">on</option>
-                        <option value="on">off</option>
+                        <option value="" disabled>
+                          Please Select
+                        </option>
+                        <option value="On">On</option>
+                        <option value="Off">Off</option>
                       </select>
                     </div>
                   </div>
@@ -744,11 +772,25 @@ function Employee() {
           </ModalBody>
         </Modal>
       </div>
+      <div className="header">
+        <h4>List Of ALL Employees</h4>
+      </div>
+      <div className="addButton4">
+        <NavLink className="nav-link" to="/home/addEmployee">
+          <button
+            className="btn btn-success"
+            type="submit"
+            onClick={() => {}}
+          >
+            <i className="fa fa-plus-circle" aria-hidden="true"> Add Employee</i>
+          </button>
+        </NavLink>
+      </div>
       <div className="table-container">
-          <table className="table">
-            <tbody>{rowsOfCards}</tbody>
-          </table>
-        </div>
+        <table className="table">
+          <tbody>{rowsOfCards}</tbody>
+        </table>
+      </div>
       <div className="pad"></div>
     </div>
   );

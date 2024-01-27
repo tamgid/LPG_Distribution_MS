@@ -2,9 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import "./AddPurchases.css";
 import axios from "axios";
 import Alert from "./Alert";
+import useConditionalNavigate from './navigationUtils'; 
 
 
-function PurchaseForm() {
+function PurchaseForm(props) {
+  useConditionalNavigate(props.userName === "", "/");
   const [showAlert, setShowAlert] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
   const [tableData, setTableData] = useState([]);

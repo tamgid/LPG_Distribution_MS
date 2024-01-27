@@ -8,7 +8,7 @@ function NavBar(props) {
     const handleDelete = () => {
         axios.get('http://localhost:3001/logout')
         .then(res => {
-               
+               props.setName('')
         })
         .catch(err => {
             console.log(err)

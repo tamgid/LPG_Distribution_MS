@@ -2,10 +2,10 @@
     margin: 0;
     padding: 0;
     width: 195px;
-    background-color: #3d3c3c;
+    background-color: white;
     position: fixed;
     height: 90%;
-    overflow: auto;
+    overflow: scroll;
   }
 
   

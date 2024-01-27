@@ -14,21 +14,71 @@ function SideBar(props) {
       setActiveAccordion(accordionId);
     }
   };
-  
+
   return (
     <div style={{ marginTop: "4rem" }}>
       <div className="sidebar">
-        <NavLink
-          activeclassname="active"
-          to="/home/userManagement"
-          className="font"
-        >
-          <i className="fa fa-fw fa-users"></i>User Management
-        </NavLink>
-        <NavLink activeclassname="active" to="/home/contacts" className="font">
-          <i className="fa fa-fw fa-address-book-o"></i>Contacts
-        </NavLink>
         <div className="accordion accordion-flush" id="accordionFlushExample">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="flush-headingZero">
+              <button
+                className={`accordion-button ${
+                  activeAccordion === "flush-collapseZero" ? "" : "collapsed"
+                }`}
+                type="button"
+                onClick={() => handleAccordionClick("flush-collapseZero")}
+              >
+                <i className="fa fa-fw fa-users"></i>User Management
+              </button>
+            </h2>
+            <div
+              id="flush-collapseZero"
+              className={`accordion-collapse collapse ${
+                activeAccordion === "flush-collapseZero" ? "show" : ""
+              }`}
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/userManagement"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-users"></i>User Management
+                </NavLink>
+              </div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="flush-headingZero1">
+              <button
+                className={`accordion-button ${
+                  activeAccordion === "flush-collapseZero1" ? "" : "collapsed"
+                }`}
+                type="button"
+                onClick={() => handleAccordionClick("flush-collapseZero1")}
+              >
+                <i className="fa fa-fw fa-address-book-o"></i>Contacts
+              </button>
+            </h2>
+            <div
+              id="flush-collapseZero1"
+              className={`accordion-collapse collapse ${
+                activeAccordion === "flush-collapseZero1" ? "show" : ""
+              }`}
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/contacts"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-address-book-o"></i>Contacts
+                </NavLink>
+              </div>
+            </div>
+          </div>
           <div className="accordion-item">
             <h2 className="accordion-header" id="flush-headingOne">
               <button
@@ -71,11 +121,11 @@ function SideBar(props) {
           <div className="accordion-item">
             <h2 className="accordion-header">
               <button
-               className={`accordion-button ${
-                activeAccordion === "flush-collapseTwo" ? "" : "collapsed"
-              }`}
-              type="button"
-              onClick={() => handleAccordionClick("flush-collapseTwo")}
+                className={`accordion-button ${
+                  activeAccordion === "flush-collapseTwo" ? "" : "collapsed"
+                }`}
+                type="button"
+                onClick={() => handleAccordionClick("flush-collapseTwo")}
               >
                 <i className="fa fa-fw fa-cubes"></i>Products
               </button>
@@ -191,43 +241,127 @@ function SideBar(props) {
               </div>
             </div>
           </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <button
+                className={`accordion-button ${
+                  activeAccordion === "flush-collapseFifth" ? "" : "collapsed"
+                }`}
+                type="button"
+                onClick={() => handleAccordionClick("flush-collapseFifth")}
+              >
+                <i className="fa fa-fw fa-calculator"></i>Accounts
+              </button>
+            </h2>
+            <div
+              id="flush-collapseFifth"
+              className={`accordion-collapse collapse ${
+                activeAccordion === "flush-collapseFifth" ? "show" : ""
+              }`}
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/accounts"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-calculator"></i>Accounts
+                </NavLink>
+              </div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <button
+                className={`accordion-button ${
+                  activeAccordion === "flush-collapseSixth" ? "" : "collapsed"
+                }`}
+                type="button"
+                onClick={() => handleAccordionClick("flush-collapseSixth")}
+              >
+                <i className="fa fa-fw fa-file-text"></i>Contact Reports
+              </button>
+            </h2>
+            <div
+              id="flush-collapseSixth"
+              className={`accordion-collapse collapse ${
+                activeAccordion === "flush-collapseSixth" ? "show" : ""
+              }`}
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/contactReports"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-file-text"></i>Contact Reports
+                </NavLink>
+              </div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <button
+                className={`accordion-button ${
+                  activeAccordion === "flush-collapseSeventh" ? "" : "collapsed"
+                }`}
+                type="button"
+                onClick={() => handleAccordionClick("flush-collapseSeventh")}
+              >
+                <i className="fa fa-fw fa-minus-circle"></i>Expanses
+              </button>
+            </h2>
+            <div
+              id="flush-collapseSeventh"
+              className={`accordion-collapse collapse ${
+                activeAccordion === "flush-collapseSeventh" ? "show" : ""
+              }`}
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/expanses"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-minus-circle"></i>Expanses
+                </NavLink>
+              </div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <button
+                className={`accordion-button ${
+                  activeAccordion === "flush-collapse8th" ? "" : "collapsed"
+                }`}
+                type="button"
+                onClick={() => handleAccordionClick("flush-collapse8th")}
+              >
+                <i className="fa fa-fw fa-plus-circle"></i>Income
+              </button>
+            </h2>
+            <div
+              id="flush-collapse8th"
+              className={`accordion-collapse collapse ${
+                activeAccordion === "flush-collapse8th" ? "show" : ""
+              }`}
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/income"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-plus-circle"></i>Income
+                </NavLink>
+              </div>
+            </div>
+          </div>
         </div>
-        <NavLink activeclassname="active" to="/home/accounts" className="font">
-          <i className="fa fa-fw fa-calculator"></i>Accounts
-        </NavLink>
-        <NavLink
-          activeclassname="active"
-          to="/home/contactReports"
-          className="font"
-        >
-          <i className="fa fa-fw fa-file-text"></i>Contact Reports
-        </NavLink>
-        <NavLink
-          activeclassname="active"
-          to="/home/stockTransfer"
-          className="font"
-        >
-          <i className="fa fa-fw fa-truck"></i>Stock Transfer
-        </NavLink>
-        <NavLink
-          activeclassname="active"
-          to="/home/stockAdjustment"
-          className="font"
-        >
-          <i className="fa fa-fw fa-database"></i>Stock Adjustment
-        </NavLink>
-        <NavLink activeclassname="active" to="/home/exchange" className="font">
-          <i className="fa fa-fw fa-exchange"></i>Exchanges
-        </NavLink>
-        <NavLink activeclassname="active" to="/home/cylinder" className="font">
-          <i className="fa fa-fw fa-arrow-circle-up"></i>Cylinder Track
-        </NavLink>
-        <NavLink activeclassname="active" to="/home/expanses" className="font">
-          <i className="fa fa-fw fa-minus-circle"></i>Expanses
-        </NavLink>
-        <NavLink activeclassname="active" to="/home/income" className="font">
-          <i className="fa fa-fw fa-plus-circle"></i>Income
-        </NavLink>
       </div>
       <div className="content">
         {location.pathname === "/home" ? (

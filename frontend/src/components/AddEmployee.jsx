@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import "./AddEmployee.css";
 import axios from "axios";
 import Alert from "./Alert";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {useEffect} from 'react'
 
-function AddEmployee() {
+function AddEmployee(props) {
   const preset_key = "uploadimage";
   const cloud_name = "doh71p23w";
   const [data, setData] = useState({
@@ -16,12 +19,20 @@ function AddEmployee() {
     designation: "",
     category: "",
     salary: "",
-    active_status: "on",
+    active_status: "",
     employee_image: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.userName === "") {
+      navigate("/");
+    }
+  }, [props.userName, navigate]);
 
   const handleInputChange = async (e) => {
     const file = e.target.files[0];
@@ -53,7 +64,20 @@ function AddEmployee() {
       .post("http://localhost:3001/addEmployee", data)
       .then((res) => {
         if (res.data.Status === "Success") {
-          console.log("Successfully Inserted Data");
+          setData({
+            ...data,
+            first_name: "",
+            last_name: "",
+            date_of_birth: "",
+            present_address: "",
+            permanent_address: "",
+            mobile_no: "",
+            designation: "",
+            category: "",
+            salary: "",
+            active_status: "",
+            employee_image: "",
+          });
           setShowAlert(true);
           setTimeout(() => {
             setShowAlert(false);
@@ -69,6 +93,16 @@ function AddEmployee() {
 
   return (
     <div>
+      <div className="addButton">
+        <NavLink className="nav-link" to="/home/employee">
+          <button className="btn btn-success" type="submit" onClick={() => {}}>
+          <i className="fa fa-list-ul" aria-hidden="true">
+              {" "}
+              List of Employees
+            </i>
+          </button>
+        </NavLink>
+      </div>
       <div className="container">
         <h3>ENTER THE FOLLOWING INFORMATION TO ADD A NEW EMPLOYEE</h3>
         <form>
@@ -219,11 +253,9 @@ function AddEmployee() {
                 <label htmlFor="designation" className="form-label">
                   Designation:
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="designation"
-                  name="designation"
+                <select
+                  className="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
                   value={data.designation}
                   onChange={(e) =>
                     setData({
@@ -231,9 +263,22 @@ function AddEmployee() {
                       designation: e.target.value,
                     })
                   }
-                  required
-                  autoComplete="off"
-                />
+                >
+                  <option disabled value="">
+                    Select Please
+                  </option>
+                  <option value="Manager">Manager</option>
+                  <option value="Operations Manager">Operations Manager</option>
+                  <option value="HR Manager">HR Manager</option>
+                  <option value="Accountants">Accountants</option>
+                  <option value="Customer Service Representatives">
+                    Customer Service Representatives
+                  </option>
+                  <option value="Sales Representatives:">
+                    Sales Representatives
+                  </option>
+                  <option value="Delivery Drivers">Delivery Drivers</option>
+                </select>
               </div>
             </div>
             <div className="col-md-6">
@@ -241,11 +286,9 @@ function AddEmployee() {
                 <label htmlFor="category" className="form-label">
                   Category:
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="category"
-                  name="category"
+                <select
+                  className="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
                   value={data.category}
                   onChange={(e) =>
                     setData({
@@ -253,9 +296,18 @@ function AddEmployee() {
                       category: e.target.value,
                     })
                   }
-                  required
-                  autoComplete="off"
-                />
+                >
+                  <option disabled value="">
+                    Select Please
+                  </option>
+                  <option value="Managerial">Managerial</option>
+                  <option value="Finance Personel">Finance Personel</option>
+                  <option value="Customer Service">Customer Service</option>
+                  <option value="Sales and Marketing">
+                    Sales and Marketing
+                  </option>
+                  <option value="Field Worker">Field Worker</option>
+                </select>
               </div>
             </div>
           </div>
@@ -291,28 +343,16 @@ function AddEmployee() {
                   className="form-select"
                   id="selectedOption"
                   name="selectedOption"
-                  value={
-                    data.active_status === "on"
-                      ? "on"
-                      : data.active_status === "off"
-                      ? "off"
-                      : "on"
-                  }
+                  value={data.active_status}
                   onChange={(e) => {
-                    setData({
-                      ...data,
-                      active_status:
-                        data.active_status === "on"
-                          ? "off"
-                          : data.active_status === "off"
-                          ? "on"
-                          : "off",
-                    });
-                    console.log(data.active_status);
+                    setData({ ...data, active_status: e.target.value });
                   }}
                 >
-                  <option value="on">on</option>
-                  <option value="off">off</option>
+                  <option value="" disabled>
+                    Please Select
+                  </option>
+                  <option value="On">On</option>
+                  <option value="Off">Off</option>
                 </select>
               </div>
             </div>

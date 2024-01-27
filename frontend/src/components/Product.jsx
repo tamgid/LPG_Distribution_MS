@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import "./Product.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Alert from "./Alert";
+import { NavLink } from "react-router-dom"
+import useConditionalNavigate from './navigationUtils'; 
 
-function Product() {
+function Product(props) {
   const [data, setData] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
+  useConditionalNavigate(props.userName === "", "/");
 
   useEffect(() => {
     axios
@@ -54,7 +57,7 @@ function Product() {
           setShowAlert(true);
           setTimeout(() => {
             setShowAlert(false);
-            closeModals()
+            closeModals();
           }, 3000);
         }
       })
@@ -77,7 +80,7 @@ function Product() {
           setShowUpdateAlert(true);
           setTimeout(() => {
             setShowUpdateAlert(false);
-            closeModals()
+            closeModals();
           }, 3000);
         }
       })
@@ -101,11 +104,8 @@ function Product() {
                     <label htmlFor="firstName" className="form-label">
                       Product Name:
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="firstName"
-                      name="first_name"
+                    <select
+                      className="form-select" aria-label="Default select example"
                       value={selectedProduct.product_name}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -113,9 +113,31 @@ function Product() {
                           product_name: e.target.value,
                         })
                       }
-                      required
-                      autoComplete="off"
-                    />
+                    >
+                      <option value="" disabled>
+                        Please select
+                      </option>
+                      <option value="Omera 5.5 Kg Gas">Omera 5.5 Kg Gas</option>
+                      <option value="Omera 5.5 Kg Cylidner">
+                        Omera 5.5 Kg Cylidner
+                      </option>
+                      <option value="Omera 12 Kg Gas">Omera 12 Kg Gas</option>
+                      <option value="Omera 12 Kg Cylidner">
+                        Omera 12 Kg Cylidner
+                      </option>
+                      <option value="Omera 25 Kg Gas">Omera 25 Kg Gas</option>
+                      <option value="Omera 25 Kg Cylidner">
+                        Omera 25 Kg Cylidner
+                      </option>
+                      <option value="Omera 35 Kg Gas">Omera 35 Kg Gas</option>
+                      <option value="Omera 35 Kg Cylidner">
+                        Omera 35 Kg Cylidner
+                      </option>
+                      <option value="Omera 45 Kg Gas">Omera 45 Kg Gas</option>
+                      <option value="Omera 45 Kg Cylidner">
+                        Omera 45 Kg Cylidner
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -123,11 +145,8 @@ function Product() {
                     <label htmlFor="lastName" className="form-label">
                       Product Type:
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastName"
-                      name="last_name"
+                    <select
+                      className="form-select" aria-label="Default select example"
                       value={selectedProduct.product_type}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -135,9 +154,12 @@ function Product() {
                           product_type: e.target.value,
                         })
                       }
-                      required
-                      autoComplete="off"
-                    />
+                    >
+                      <option value="" disabled>
+                        Please Select
+                      </option>
+                      <option value="single">Single</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -147,11 +169,8 @@ function Product() {
                     <label htmlFor="firstName" className="form-label">
                       Product Category:
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="firstName"
-                      name="first_name"
+                    <select
+                      className="form-select" aria-label="Default select example"
                       value={selectedProduct.product_category}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -159,9 +178,13 @@ function Product() {
                           product_category: e.target.value,
                         })
                       }
-                      required
-                      autoComplete="off"
-                    />
+                    >
+                      <option value="" disabled>
+                        Please Select
+                      </option>
+                      <option value="Gas">Gas</option>
+                      <option value="Cylinder">Cylinder</option>
+                    </select>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -193,11 +216,8 @@ function Product() {
                     <label htmlFor="firstName" className="form-label">
                       Brand:
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="firstName"
-                      name="first_name"
+                    <select
+                      className="form-select" aria-label="Default select example"
                       value={selectedProduct.brand}
                       onChange={(e) =>
                         setSelectedProduct({
@@ -205,9 +225,10 @@ function Product() {
                           brand: e.target.value,
                         })
                       }
-                      required
-                      autoComplete="off"
-                    />
+                    >
+                      <option value="">Please Select</option>
+                      <option value="Omera">Omera</option>
+                    </select>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -256,8 +277,11 @@ function Product() {
           {showAlert && (
             <Alert type="success" message="Data Deleted Successfully" />
           )}
-           {selectedProduct && (
-            <div className="d-flex justify-content-center" style={{marginTop: '4rem'}}>
+          {selectedProduct && (
+            <div
+              className="d-flex justify-content-center"
+              style={{ marginTop: "4rem" }}
+            >
               <button
                 type="button"
                 className="btn btn-outline-danger mr-4"
@@ -276,9 +300,23 @@ function Product() {
           )}
         </ModalBody>
       </Modal>
+      <div className="head">
+        <h4>List Of All Products</h4>
+      </div>
+      <div className="addButton2">
+        <NavLink className="nav-link" to="/home/addProducts">
+          <button
+            className="btn btn-success"
+            type="submit"
+            onClick={() => {}}
+          >
+            <i className="fa fa-plus-circle" aria-hidden="true"> Add Product</i>
+          </button>
+        </NavLink>
+      </div>
       <div className="my-table">
         <table className="table table-striped">
-          <thead>
+          <thead className="table-head">
             <tr>
               <th scope="col">Product Name</th>
               <th scope="col">Product Type </th>

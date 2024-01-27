@@ -1,8 +1,10 @@
 import React from 'react'
 import NavBar from './NavBar'
+import useConditionalNavigate from './navigationUtils'; 
 
 
 function Profile(props) {
+  useConditionalNavigate(props.userName === "", "/");
   return (
     <>
       <NavBar userName={props.userName}/>

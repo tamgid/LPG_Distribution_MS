@@ -1,28 +1,23 @@
 import React from 'react'
 import NavBar from './NavBar'
 import SideBar from './SideBar'
+import { useNavigate } from "react-router-dom";
 import {useEffect} from 'react'
-import axios from 'axios'
 
 
 function Home(props) {
   
+  const navigate = useNavigate();
+
   useEffect(() => {
-      axios.get('http://localhost:3001/addCookie')
-      .then(res => {
-          if(res.data.Status === 'Success')
-          {
-              props.setName(res.data.Name)
-          }
-      })
-      .catch(err => {
-          console.log(err)
-      })
-  })
+    if (props.userName === "") {
+      navigate("/");
+    }
+  }, [props.userName, navigate]);
  
   return (
     <div>
-      <NavBar userName={props.userName}/>
+      <NavBar userName={props.userName} setName={props.setName}/>
       <SideBar userName={props.userName}/>
     </div>
   )

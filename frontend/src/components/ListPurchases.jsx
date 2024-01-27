@@ -3,8 +3,10 @@ import axios from "axios";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./ListPurchases.css";
 import Alert from "./Alert";
+import useConditionalNavigate from './navigationUtils'; 
 
-function ListPurchases() {
+function ListPurchases(props) {
+  useConditionalNavigate(props.userName === "", "/");
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [selectedPurchase, setSelectedPurchase] = useState(null);
@@ -61,21 +63,31 @@ function ListPurchases() {
         console.log(err);
       });
 
-    axios
-      .get("http://localhost:3001/getProduct")
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          setProduct(res.data.result);
-          // console.log(product);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [searchOn]);
+      axios
+    .get("http://localhost:3001/getProduct")
+    .then((res) => {
+      if (res.data.Status === "Success") {
+        setProduct(res.data.result);
+      //  console.log(product);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, [searchOn,product]);
 
   const handleSearch = () => {
     setSearchOn(true);
+    
+    // if(startDate===null)
+    // {
+    //   setStartDate(new Date())
+    // }
+
+    // if(endDate===null)
+    // {
+    //   setEndDate(new Date())
+    // }
     if (startDate && endDate) {
       const filteredData = allData.filter((item) => {
         const purchaseDate = new Date(item.date);
@@ -176,11 +188,11 @@ function ListPurchases() {
 
   const calculateTotal = () => {
     let total =
-      parseInt(selectedPurchase.gas_5_5) * parseInt(product[4].unit) +
-      parseInt(selectedPurchase.gas_12) * parseInt(product[0].unit) +
-      parseInt(selectedPurchase.gas_25) * parseInt(product[1].unit) +
-      parseInt(selectedPurchase.gas_35) * parseInt(product[2].unit) +
-      parseInt(selectedPurchase.gas_45) * parseInt(product[3].unit);
+      parseInt(selectedPurchase.gas_5_5) * parseInt(product[0].unit) +
+      parseInt(selectedPurchase.gas_12) * parseInt(product[1].unit) +
+      parseInt(selectedPurchase.gas_25) * parseInt(product[2].unit) +
+      parseInt(selectedPurchase.gas_35) * parseInt(product[3].unit) +
+      parseInt(selectedPurchase.gas_45) * parseInt(product[4].unit);
     return total;
   };
 
