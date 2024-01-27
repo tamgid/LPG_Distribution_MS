@@ -145,6 +145,7 @@ app.get("/collectProduct", async (req, res) => {
   }
 });
 
+
 app.post('/addProduct', async(req, res) => {
   try{
     const product_name = req.body.product_name
@@ -153,7 +154,7 @@ app.post('/addProduct', async(req, res) => {
     const unit = parseInt(req.body.unit)
     const brand = req.body.brand
     const quantity = parseInt(req.body.quantity)
-
+ 
     await prisma.product.create({
       data: {
         product_name,
