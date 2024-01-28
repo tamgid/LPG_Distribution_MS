@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2024 at 08:47 PM
+-- Generation Time: Jan 28, 2024 at 03:43 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,7 +50,8 @@ CREATE TABLE `employee` (
 
 INSERT INTO `employee` (`employee_id`, `first_name`, `last_name`, `date_of_birth`, `present_address`, `parmanent_address`, `mobile_no`, `start_work`, `stop_work`, `designation`, `category`, `salary`, `active_status`, `employee_image`) VALUES
 (4, 'Md.', 'Salauddin', '1999-09-28', 'Cosmopolitan R/A, Road no: 9, Chittagong', 'Shohagpur, Ashuganj, Brahmanbaria', '01738668434', '2024-01-27', NULL, 'Manager', 'Manegerial', '56000', 'off', 'https://res.cloudinary.com/doh71p23w/image/upload/v1706342655/a6kvls7q2akybiqfvmuj.jpg'),
-(5, 'Emam', 'Hossain', '1999-09-07', 'Cosmopolitan R/A, Road No:9, Chittagong', 'Sonaimuri, Chatkhil, Noakhali', '01712233445', '2024-01-27', NULL, 'HR Manager', 'Managerial', '50000', 'On', 'https://res.cloudinary.com/doh71p23w/image/upload/v1706350150/c93aifdl35cwt4i65cj5.jpg');
+(5, 'Emam', 'Hossain', '1999-09-07', 'Cosmopolitan R/A, Road No:9, Chittagong', 'Sonaimuri, Chatkhil, Noakhali', '01712233445', '2024-01-27', NULL, 'HR Manager', 'Managerial', '50000', 'On', 'https://res.cloudinary.com/doh71p23w/image/upload/v1706350150/c93aifdl35cwt4i65cj5.jpg'),
+(6, 'H M Imtiaz', 'Uddin', '1999-10-07', 'Choumohoni, Agrabad, Chittagong', 'Choumohoni, Agrabad, Chittagong', '01823344556', '2024-01-28', NULL, 'HR Manager', 'Managerial', '45000', 'On', 'https://res.cloudinary.com/doh71p23w/image/upload/v1706422574/ihya9kfanokgdgdhnhg1.jpg');
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,8 @@ CREATE TABLE `purchases` (
 --
 
 INSERT INTO `purchases` (`purchase_id`, `date`, `location`, `supplier`, `status`, `gas_5_5`, `cyl_5_5`, `gas_12`, `cyl_12`, `gas_25`, `cyl_25`, `gas_35`, `cyl_35`, `gas_45`, `cyl_45`, `total`) VALUES
-(1, '2024-01-01', 'Chittagong', 'Omera-LPGD', 'Received', 10, 0, 40, 0, 12, 0, 0, 0, 0, 0, 72000);
+(1, '2024-01-01', 'Chittagong', 'Omera-LPGD', 'Received', 10, 0, 40, 0, 12, 0, 0, 0, 0, 0, 72000),
+(2, '2024-01-28', 'Chittagong', 'Omera-LPGD', 'Received', 45, 0, 30, 0, 12, 0, 0, 0, 0, 0, 81000);
 
 -- --------------------------------------------------------
 
@@ -125,10 +127,11 @@ INSERT INTO `purchases` (`purchase_id`, `date`, `location`, `supplier`, `status`
 CREATE TABLE `sales` (
   `sales_id` int(11) UNSIGNED NOT NULL,
   `date` date NOT NULL,
+  `delivery_date` date NOT NULL,
   `customer_name` varchar(50) NOT NULL,
   `location` varchar(100) NOT NULL,
-  `gas_5.5` int(11) NOT NULL,
-  `cyl_5.5` int(11) NOT NULL,
+  `gas_5_5` int(11) NOT NULL,
+  `cyl_5_5` int(11) NOT NULL,
   `gas_12` int(11) NOT NULL,
   `cyl_12` int(11) NOT NULL,
   `gas_25` int(11) NOT NULL,
@@ -137,9 +140,15 @@ CREATE TABLE `sales` (
   `cyl_35` int(11) NOT NULL,
   `gas_45` int(11) NOT NULL,
   `cyl_45` int(11) NOT NULL,
-  `status` varchar(20) NOT NULL,
   `total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`sales_id`, `date`, `delivery_date`, `customer_name`, `location`, `gas_5_5`, `cyl_5_5`, `gas_12`, `cyl_12`, `gas_25`, `cyl_25`, `gas_35`, `cyl_35`, `gas_45`, `cyl_45`, `total`) VALUES
+(3, '2024-01-26', '2024-01-26', 'Sumon LPG Shop', 'Chittagong', 7, 0, 6, 0, 6, 0, 5, 0, 2, 0, 36700);
 
 -- --------------------------------------------------------
 
@@ -203,7 +212,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `employee_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `employee_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -215,13 +224,13 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `purchase_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `purchase_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `sales_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `sales_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
