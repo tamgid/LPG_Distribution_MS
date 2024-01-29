@@ -21,11 +21,10 @@ import AddProducts from './components/AddProducts';
 import AddPurchases from './components/AddPurchases';
 import ListPurchases from './components/ListPurchases';
 import ListSales from './components/ListSales';
-import SellsSummary from './components/SellsSummary';
 import AddSale from './components/AddSale';
-
-
-
+import AddContacts from './components/AddContacts';
+import ContactCustomers from './components/ContactCustomers';
+import ContactSuppliers from './components/ContactSuppliers'
 function App() {
 
   const [userName, setUserName] = useState('')
@@ -51,10 +50,12 @@ function App() {
             <Route path='/home/listPurchases' element={<ListPurchases userName={userName} />}></Route>
             <Route path='/home/addPurchases' element={<AddPurchases userName={userName} />}></Route>
             <Route path='/home/listSales' element={<ListSales userName={userName} />}></Route>
-            <Route path='/home/sellsSummary' element={<SellsSummary userName={userName} />}></Route>
             <Route path='/home/addSale' element={<AddSale userName={userName} />}></Route>
             <Route path='/home/expanses' element={<Expanses userName={userName} />}></Route>
             <Route path='/home/income' element={<Income userName={userName} />}></Route>
+            <Route path='/home/addContact' element={<AddContacts/>}></Route>
+            <Route path='/home/contactCustomer' element={<ContactCustomers/>}></Route>
+            <Route path='/home/contactSupplier' element={<ContactSuppliers/>}></Route>
           </Route>
           <Route path='/profile' element={<Profile userName={userName}/>} />
           <Route path='/about' element={<About userName={userName}/>} />
