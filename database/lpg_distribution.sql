@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2024 at 03:43 PM
+-- Generation Time: Jan 29, 2024 at 05:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,59 @@ SET time_zone = "+00:00";
 --
 -- Database: `lpg_distribution`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts`
+--
+
+CREATE TABLE `accounts` (
+  `account_id` int(11) NOT NULL,
+  `account_name` varchar(100) NOT NULL,
+  `account_type` varchar(100) NOT NULL,
+  `account_number` varchar(100) NOT NULL,
+  `short_description` varchar(200) NOT NULL,
+  `initial_balance` int(20) NOT NULL,
+  `net_balance` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`account_id`, `account_name`, `account_type`, `account_number`, `short_description`, `initial_balance`, `net_balance`) VALUES
+(1, 'xyz-Account', 'Bank', 'Acc01778', 'Description-description', 1000000, 1000000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `contact_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `company_name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `mobile` varchar(50) NOT NULL,
+  `full_address` varchar(100) NOT NULL,
+  `district` varchar(50) NOT NULL,
+  `contactType` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`contact_id`, `name`, `company_name`, `email`, `mobile`, `full_address`, `district`, `contactType`) VALUES
+(1, 'H.M Imtiaz Uddin', 'Fresh LPG', 'hmimtiaz2@gmail.com', '01930534674', 'Agrabad', 'Chittagong', 'supplier'),
+(2, 'Raiyan', 'Raiyan Enterprise', 'raiyan7@gmail.com', '01814612007', 'GEC Circle', 'Chittagong', 'customer'),
+(3, 'Afif', 'Afif Enterprise', 'afif@gmail.com', '01511234598', 'Hathazari', 'Chittagong', 'customer'),
+(4, 'Sakib', 'Omera LPG', 'sakib@gmail.com', '01698762742', 'Muradpur', 'Chittagong', 'supplier'),
+(7, 'Tamjid', 'Shadakur Enterprise', 'shadakur@gmail.com', '01551987245', 'Jobra', 'Chittagong', 'customer'),
+(8, 'Salauddin', 'Saka Enterprise', 'shible0805@gmail.com', '01719683640', 'Hill view', 'Chittagong', 'customer'),
+(11, 'Emam', 'UniGas ', 'emam@gmail.com', '01819567432', 'Oxygen', 'Chittagong', 'supplier');
 
 -- --------------------------------------------------------
 
@@ -148,7 +201,7 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`sales_id`, `date`, `delivery_date`, `customer_name`, `location`, `gas_5_5`, `cyl_5_5`, `gas_12`, `cyl_12`, `gas_25`, `cyl_25`, `gas_35`, `cyl_35`, `gas_45`, `cyl_45`, `total`) VALUES
-(3, '2024-01-26', '2024-01-26', 'Sumon LPG Shop', 'Chittagong', 7, 0, 6, 0, 6, 0, 5, 0, 2, 0, 36700);
+(4, '2024-01-22', '2024-01-22', 'Shahriad LPG Shop', 'Chittagong', 13, 0, 7, 0, 8, 0, 0, 0, 0, 0, 29600);
 
 -- --------------------------------------------------------
 
@@ -173,6 +226,18 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`account_id`);
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`contact_id`);
 
 --
 -- Indexes for table `employee`
@@ -209,6 +274,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
@@ -230,7 +307,7 @@ ALTER TABLE `purchases`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `sales_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sales_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
