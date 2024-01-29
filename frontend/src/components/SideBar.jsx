@@ -71,11 +71,26 @@ function SideBar(props) {
               <div className="accordion-body" style={{ padding: 0 }}>
                 <NavLink
                   activeclassname="active"
-                  to="/home/contacts"
+                  to="/home/addContact"
                   className="font"
                 >
-                  <i className="fa fa-fw fa-address-book-o"></i>Contacts
+                  <i class="fa fa-address-book" aria-hidden="true"></i>Add Contacts
                 </NavLink>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/contactCustomer"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-address-book-o"></i>Customer Contact
+                </NavLink>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/contactSupplier"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-address-book-o"></i>Customer Contact
+                </NavLink>
+                
               </div>
             </div>
           </div>
@@ -224,14 +239,6 @@ function SideBar(props) {
                 </NavLink>
                 <NavLink
                   activeclassname="active"
-                  to="/home/sellsSummary"
-                  className="font"
-                >
-                  <i className="fa fa-window-maximize" aria-hidden="true"></i>{" "}
-                  Sells Summary
-                </NavLink>
-                <NavLink
-                  activeclassname="active"
                   to="/home/addSale"
                   className="font"
                 >
@@ -280,7 +287,7 @@ function SideBar(props) {
                 type="button"
                 onClick={() => handleAccordionClick("flush-collapseSixth")}
               >
-                <i className="fa fa-fw fa-file-text"></i>Contact Reports
+                <i className="fa fa-fw fa-file-text"></i>Reports
               </button>
             </h2>
             <div
@@ -296,7 +303,7 @@ function SideBar(props) {
                   to="/home/contactReports"
                   className="font"
                 >
-                  <i className="fa fa-fw fa-file-text"></i>Contact Reports
+                  <i className="fa fa-fw fa-file-text"></i>Reports
                 </NavLink>
               </div>
             </div>

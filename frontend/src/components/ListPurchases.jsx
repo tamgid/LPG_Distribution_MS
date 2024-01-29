@@ -3,9 +3,9 @@ import axios from "axios";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./ListPurchases.css";
 import Alert from "./Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
-function ListPurchases(props) {
+function ListPurchases() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -224,6 +224,8 @@ function ListPurchases(props) {
                   <div className="col">
                     <label htmlFor="purchaseStatus">Purchase Status:</label>
                     <select
+                      className="form-select form-select-lg mb-3"
+                      aria-label=".form-select-lg example"
                       id="purchaseStatus"
                       name="purchaseStatus"
                       value={selectedPurchase.status}
@@ -456,6 +458,20 @@ function ListPurchases(props) {
             </button>
           </div>
         </div>
+      </div>
+      <div>
+      <NavLink
+          className="nav-link"
+          to="/home/addPurchases"
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <button className="btn btn-success" type="submit" onClick={() => {}}>
+            <i className="fa fa-plus-circle" aria-hidden="true">
+              {" "}
+              Add Purchase
+            </i>
+          </button>
+        </NavLink>
       </div>
       <div className="purchase-table">
         <table className="table table-striped">
