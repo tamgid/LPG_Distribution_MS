@@ -301,15 +301,15 @@ app.post('/addPurchase', async(req, res) => {
     const net_amount = parseInt(req.body.net_amount)
     // console.log(net_amount)
     // console.log(selected_products)
-    const temp1 = selected_products.find((item) => item.product_name === 'Omera 5.5Kg Gas');
+    const temp1 = selected_products.find((item) => item.product_name === 'Omera 5.5 Kg Gas');
     const gas_5_5 = temp1 ? parseInt(temp1.quantity) : 0
-    const temp2 = selected_products.find((item) => item.product_name === 'Omera 12Kg Gas');
+    const temp2 = selected_products.find((item) => item.product_name === 'Omera 12 Kg Gas');
     const gas_12 = temp2 ? parseInt(temp2.quantity) : 0
-    const temp3 = selected_products.find((item) => item.product_name === 'Omera 25Kg Gas');
+    const temp3 = selected_products.find((item) => item.product_name === 'Omera 25 Kg Gas');
     const gas_25 = temp3 ? parseInt(temp3.quantity) : 0
-    const temp4 = selected_products.find((item) => item.product_name === 'Omera 35Kg Gas');
+    const temp4 = selected_products.find((item) => item.product_name === 'Omera 35 Kg Gas');
     const gas_35 = temp4 ? parseInt(temp4.quantity) : 0
-    const temp5 = selected_products.find((item) => item.product_name === 'Omera 45Kg Gas');
+    const temp5 = selected_products.find((item) => item.product_name === 'Omera 45 Kg Gas');
     const gas_45 = temp5 ? parseInt(temp5.quantity) : 0
 
     const result = await prisma.purchases.create({
@@ -420,6 +420,310 @@ app.put('/updatePurchase/:id', async (req, res) => {
     return res.status(500).json({Error: 'Unable to update the data'})
   }
 })
+
+app.post('/addSale', async(req, res) => {
+  try{
+    const customer_name = req.body.customerName
+    const sale_date = new Date(req.body.sale_date)
+    const delivery_date = new Date(req.body.delivery_date)
+    const location = req.body.location
+    const selected_products = req.body.selected_products
+    const net_amount = parseInt(req.body.net_amount)
+    // console.log(net_amount)
+    // console.log(selected_products)
+    const temp1 = selected_products.find((item) => item.product_name === 'Omera 5.5 Kg Gas');
+    const gas_5_5 = temp1 ? parseInt(temp1.quantity) : 0
+    const temp2 = selected_products.find((item) => item.product_name === 'Omera 12 Kg Gas');
+    const gas_12 = temp2 ? parseInt(temp2.quantity) : 0
+    const temp3 = selected_products.find((item) => item.product_name === 'Omera 25 Kg Gas');
+    const gas_25 = temp3 ? parseInt(temp3.quantity) : 0
+    const temp4 = selected_products.find((item) => item.product_name === 'Omera 35 Kg Gas');
+    const gas_35 = temp4 ? parseInt(temp4.quantity) : 0
+    const temp5 = selected_products.find((item) => item.product_name === 'Omera 45 Kg Gas');
+    const gas_45 = temp5 ? parseInt(temp5.quantity) : 0
+
+    const result = await prisma.sales.create({
+      data : {
+        customer_name: customer_name,
+        date : sale_date,
+        location : location,
+        delivery_date: delivery_date,
+        gas_5_5 : gas_5_5,
+        gas_12 : gas_12,
+        gas_25 : gas_25,
+        gas_35 : gas_35,
+        gas_45 : gas_45,
+        total : net_amount
+      }
+    })
+    return res.status(200).json({Status: 'Success', result : result})
+  }catch(error){
+    console.error('Error inserting data in server:', error);
+    return res.status(500).json({ Error: 'Inserting data error in server' });
+  }
+})
+
+app.get('/listSales', async(req, res) => {
+  try{
+    const result = await prisma.sales.findMany();
+    if(result.length === 0)
+    {
+      return res.status(200).json({Error: 'No Such data exist in the server'})
+    }else{
+      return res.status(200).json({Status: 'Success', result: result})
+    }
+
+  }catch(error){
+    console.error('Error getting data from server:', error);
+    return res.status(500).json({ Error: 'Getting data error from server' });
+  }
+})
+
+app.put('/updateSale/:id', async (req, res) => {
+  try{
+    const id = parseInt(req.params.id)
+    //console.log(req.body)
+    const customer_name = req.body.customer_name
+    const gas_5_5 = parseInt(req.body.gas_5_5)
+    const gas_12 = parseInt(req.body.gas_12)
+    const gas_25 = parseInt(req.body.gas_25)
+    const gas_35 = parseInt(req.body.gas_35)
+    const gas_45 = parseInt(req.body.gas_45)
+    const total = req.body.total
+    // console.log(total)
+
+    const updatedSale = await prisma.sales.update({
+      where: {
+        sales_id: id
+      },
+
+      data: {
+        customer_name,
+        gas_5_5,
+        gas_12,
+        gas_25,
+        gas_35,
+        gas_45,
+        total,
+      }
+    })
+    return res.status(200).json({Status: 'Success', result: updatedSale})
+  }
+  catch(err)
+  {
+    return res.status(500).json({Error: 'Unable to update the data'})
+  }
+})
+
+app.delete('/deleteSale/:id', async(req, res)=> {
+  try{
+    const id = parseInt(req.params.id)
+    const deletedSale = await prisma.sales.delete({
+      where: {
+        sales_id: id
+      }
+    })
+    return res.status(200).json({Status: 'Success', result: deletedSale})
+  }
+  catch(err){
+    return res.status(500).json({Error: 'Error occurred during deleting data'})
+  }
+})
+
+app.post('/addAccount', async (req, res) => {
+  try {
+   
+    const account_name = req.body.account_name;
+    const account_type = req.body.account_type;
+    const account_number = req.body.account_number;
+    const short_description = req.body.short_description;
+    const initial_balance = parseInt(req.body.initial_balance);
+    
+    const result = await prisma.accounts.create({
+      data: {
+        account_name,
+        account_type,
+        account_number,
+        short_description,
+        initial_balance,
+      },
+    });
+
+    return res.json({ Status: 'Success',  Result: result});
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: 'Inserting Data error in server' });
+  }
+});
+
+app.get('/collectAccount', async(req, res) => {
+  try{
+    const result = await prisma.accounts.findMany();
+    //console.log(result)
+    if(result.length === 0)
+    {
+      return res.status(200).json({Error: 'No Such data exist in the server'})
+    }else{
+      return res.status(200).json({Status: 'Success', result: result})
+    }
+  }catch(error){
+    console.error('Error getting data from server:', error);
+    return res.status(500).json({ Error: 'Getting data error from server' });
+  }
+})
+
+app.get('/collectTotalPurchase', async (req, res) => {
+  try {
+    const result = await prisma.purchases.aggregate({
+      _sum: {
+        
+        total: true,
+      },
+    });
+    return res.status(200).json({ Status: 'Success', Result: result._sum.total });
+  } catch (error) {
+    console.error('Error getting data from server:', error);
+    return res.status(500).json({ Error: 'Getting data error from server' });
+  }
+});
+
+app.get('/collectTotalSale', async (req, res) => {
+  try {
+    const result = await prisma.sales.aggregate({
+      _sum: {
+        
+        total: true,
+      },
+    });
+    return res.status(200).json({ Status: 'Success', Result: result._sum.total });
+  } catch (error) {
+    console.error('Error getting data from server:', error);
+    return res.status(500).json({ Error: 'Getting data error from server' });
+  }
+});
+
+app.post('/addContacts', async (req, res) => {
+  try {
+    const name= req.body.name
+    const company_name = req.body.company_name
+    const email=req.body.email
+    const mobile = req.body.mobile
+    const full_address = req.body.full_address 
+    const district = req.body.district
+    const contactType = req.body.contactType
+   
+
+    await prisma.contacts.create({
+      data: {
+        name,
+        company_name,
+        email,
+        mobile,
+        full_address,
+        district,
+        contactType,
+      },
+    });
+
+    return res.json({ Status: 'Success' });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: 'Inserting Data error in server' });
+  }
+});
+
+
+app.get("/supplierContacts", async (req, res) => {
+  try {
+    const suppliers = await prisma.contacts.findMany({
+      where: { contactType: "supplier" },
+      select: {
+        contact_id: true,
+        name: true,
+        company_name: true,
+        email: true,
+        mobile: true,
+        full_address: true,
+        district: true,
+      },
+    });
+    res.json({ Status: "Success", result: suppliers });
+  } catch (error) {
+    console.error("Error fetching suppliers:", error);
+    res.status(500).json({ Error: "Error fetching suppliers" });
+  }
+});
+
+app.get("/customerContacts", async (req, res) => {
+  try {
+    const customers = await prisma.contacts.findMany({
+      where: { contactType: "customer" },
+      select: {
+        contact_id: true,
+        name: true,
+        company_name: true,
+        email: true,
+        mobile: true,
+        full_address: true,
+        district: true,
+      },
+    });
+    res.json({ Status: "Success", result: customers });
+  } catch (error) {
+    console.error("Error fetching customers:", error);
+    res.status(500).json({ Error: "Error fetching customers" });
+  }
+});
+
+
+app.delete('/deleteContacts/:id', async(req, res) => {
+  try{
+    const id = parseInt(req.params.id)
+    // console.log(id)
+    const deletedContacts = await prisma.contacts.delete({
+      where: {
+        contact_id: id,
+      },
+    });
+    return res.status(200).json({Status: 'Success', result: deletedContacts})
+  }catch(error){
+    return res.status(500).json({Error: 'Error occurred during deleting data'})
+  }
+  
+})
+
+app.put('/updateContacts/:id', async(req, res) => {
+  try{
+    const id = parseInt(req.params.id)
+    // console.log(id)
+    const name= req.body.name
+    const company_name = req.body.company_name
+    const email = req.body.email
+    const mobile = req.body.mobile
+    const full_address = req.body.full_address 
+    const district = req.body.district
+    const contactType = req.body.contactType 
+    const updatedContacts = await prisma.contacts.update({
+      where: {
+        contact_id: id,
+      },
+      data: {
+        name : name, 
+        company_name : company_name, 
+        email : email,
+        mobile: mobile,
+        full_address: full_address, 
+        district: district, 
+        contactType: contactType,
+      },
+    });
+    return res.status(200).json({Status: 'Success', result: updatedContacts})
+  }catch(error){
+    return res.status(500).json({Error: 'Error occurred during updating  data'})
+  }
+})
+
+
 
 
 app.listen(port, () => {
