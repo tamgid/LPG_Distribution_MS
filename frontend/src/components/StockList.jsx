@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-//import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./ListPurchases.css";
-//import Alert from "./Alert";
-import { useNavigate, /*NavLink*/ } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function StockList() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Retrieve authentication status from localStorage
     const isAuthenticated = localStorage.getItem("isAuthenticated");
 
     if (!isAuthenticated) {
       navigate("/");
     } else {
     axios
-        .get("http://localhost:3001/stock") // Update the URL based on your backend setup
+        .get("http://localhost:3001/stock") 
         .then((res) => {
           if (res.data.Status === "Success") {
             setData(res.data.stock);
@@ -30,8 +27,7 @@ function StockList() {
         });
     }
    }, [navigate]);
- 
-
+   
 
   return (
     <div>
