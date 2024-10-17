@@ -25,6 +25,11 @@ import AddSale from './components/AddSale';
 import AddContacts from './components/AddContacts';
 import ContactCustomers from './components/ContactCustomers';
 import ContactSuppliers from './components/ContactSuppliers'
+import Sells_Report from './components/Sells_Report';
+import Purchase_Report from './components/Purchase_Report';
+import Sells_Summary_Report from './components/Sells_Summary_Report';
+import Purchases_Summary_Report from './components/Purchases_Summary_Report';
+
 function App() {
 
   const [userName, setUserName] = useState('')
@@ -56,6 +61,10 @@ function App() {
             <Route path='/home/addContact' element={<AddContacts/>}></Route>
             <Route path='/home/contactCustomer' element={<ContactCustomers/>}></Route>
             <Route path='/home/contactSupplier' element={<ContactSuppliers/>}></Route>
+            <Route path='/home/sells_Report' element={<Sells_Report/>}></Route>
+            <Route path='/home/purchase_Report' element={<Purchase_Report/>}></Route>
+            <Route path='/home/sells_Summary_Report' element={<Sells_Summary_Report/>}></Route>
+            <Route path='/home/purchases_Summary_Report' element={<Purchases_Summary_Report/>}></Route>
           </Route>
           <Route path='/profile' element={<Profile userName={userName}/>} />
           <Route path='/about' element={<About userName={userName}/>} />

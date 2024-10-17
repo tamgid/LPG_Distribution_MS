@@ -300,10 +300,37 @@ function SideBar(props) {
               <div className="accordion-body" style={{ padding: 0 }}>
                 <NavLink
                   activeclassname="active"
-                  to="/home/contactReports"
+                  to="/home/sells_Report"
                   className="font"
                 >
-                  <i className="fa fa-fw fa-file-text"></i>Reports
+                  <i className="fa fa-fw fa-file-text"></i>Sells Reports
+                </NavLink>
+              </div>
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/purchase_Report"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-file-text"></i>Purchase Reports
+                </NavLink>
+              </div>
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/sells_Summary_Report"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-file-text"></i>Sells Summary
+                </NavLink>
+              </div>
+              <div className="accordion-body" style={{ padding: 0 }}>
+                <NavLink
+                  activeclassname="active"
+                  to="/home/purchases_Summary_Report"
+                  className="font"
+                >
+                  <i className="fa fa-fw fa-file-text"></i>Purchase Summary
                 </NavLink>
               </div>
             </div>
