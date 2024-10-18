@@ -6,7 +6,7 @@ function Sells_Summary_Report() {
   const [supplierName, setSupplierName] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8081/purchases_summary?supplier=${supplierName}`)
+    fetch(`http://localhost:3001/purchases_summary?supplier=${supplierName}`)
       .then((res) => res.json())
       .then((salesData) => setSalesData(salesData))
       .catch((err) => console.log(err));

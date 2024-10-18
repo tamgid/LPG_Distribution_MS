@@ -8,7 +8,7 @@ function Purchase_Report() {
   const [supplierName, setSupplierName] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8081/purchases?from=${fromDate}&to=${toDate}&supplier=${supplierName}`)
+    fetch(`http://localhost:3001/purchases?from=${fromDate}&to=${toDate}&supplier=${supplierName}`)
       .then((res) => res.json())
       .then((purchaseData) => setPurchaseData(purchaseData))
       .catch((err) => console.log(err));

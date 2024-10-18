@@ -171,6 +171,187 @@ app.post('/addProduct', async(req, res) => {
   }
 })
 
+// sales route in server1 using Prisma
+app.get('/sales', async (req, res) => {
+  try {
+    const { from, to, customer } = req.query;
+
+    // Construct dynamic filters for the query
+    const filters = {};
+    
+    if (from && to) {
+      filters.date = {
+        gte: new Date(from),
+        lte: new Date(to),
+      };
+    }
+
+    if (customer) {
+      filters.customer_name = {
+        contains: customer,
+      };
+    }
+
+    // Fetch sales data using Prisma
+    const salesData = await prisma.sales.findMany({
+      where: filters,
+    });
+
+    return res.json(salesData);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error fetching sales data', details: error });
+  }
+});
+
+// sales_summary route in server1 using Prisma
+app.get('/sales_summary', async (req, res) => {
+  try {
+    const { customer } = req.query;
+
+    // Construct dynamic filter
+    const filters = {};
+    if (customer) {
+      filters.customer_name = {
+        contains: customer,
+        mode: 'insensitive', // Optional: make the search case-insensitive
+      };
+    }
+
+    // Fetch sales summary using Prisma with aggregation
+    const salesSummary = await prisma.sales.groupBy({
+      by: ['customer_name'],
+      where: filters,
+      _sum: {
+        total: true,
+        gas_5_5: true,
+        cyl_5_5: true,
+        gas_12: true,
+        cyl_12: true,
+        gas_25: true,
+        cyl_25: true,
+        gas_35: true,
+        cyl_35: true,
+        gas_45: true,
+        cyl_45: true,
+      },
+    });
+
+    // Map the result to ensure a consistent response format
+    const result = salesSummary.map(item => ({
+      customer_name: item.customer_name,
+      total: item._sum.total || 0,
+      gas_5_5: item._sum.gas_5_5 || 0,
+      cyl_5_5: item._sum.cyl_5_5 || 0,
+      gas_12: item._sum.gas_12 || 0,
+      cyl_12: item._sum.cyl_12 || 0,
+      gas_25: item._sum.gas_25 || 0,
+      cyl_25: item._sum.cyl_25 || 0,
+      gas_35: item._sum.gas_35 || 0,
+      cyl_35: item._sum.cyl_35 || 0,
+      gas_45: item._sum.gas_45 || 0,
+      cyl_45: item._sum.cyl_45 || 0,
+    }));
+
+    return res.json(result);
+  } catch (error) {
+    console.error('Error fetching sales summary:', error); // Log error for debugging
+    return res.status(500).json({ error: 'Error fetching sales summary', details: error });
+  }
+});
+
+
+
+// purchases route in server1 using Prisma
+app.get('/purchases', async (req, res) => {
+  try {
+    const { from, to, supplier } = req.query;
+
+    // Construct dynamic filters
+    const filters = {};
+    
+    if (from && to) {
+      filters.date = {
+        gte: new Date(from),
+        lte: new Date(to),
+      };
+    }
+
+    if (supplier) {
+      filters.supplier = {
+        contains: supplier,
+      };
+    }
+
+    // Fetch purchase data using Prisma
+    const purchaseData = await prisma.purchases.findMany({
+      where: filters,
+    });
+
+    return res.json(purchaseData);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error fetching purchase data', details: error });
+  }
+});
+
+
+app.get('/purchases_summary', async (req, res) => {
+  try {
+    const { supplier } = req.query;
+
+    // Construct dynamic filter for Prisma
+    const filters = {};
+    if (supplier) {
+      filters.supplier = {
+        contains: supplier, // Partial match for supplier
+        mode: 'insensitive', // Optional: make the search case-insensitive
+      };
+    }
+
+    // Fetch purchase summary using Prisma with aggregation
+    const purchasesSummary = await prisma.purchases.groupBy({
+      by: ['supplier'],
+      where: filters,
+      _sum: {
+        total: true,
+        gas_5_5: true,
+        cyl_5_5: true,
+        gas_12: true,
+        cyl_12: true,
+        gas_25: true,
+        cyl_25: true,
+        gas_35: true,
+        cyl_35: true,
+        gas_45: true,
+        cyl_45: true,
+      },
+    });
+
+    // Map the result to have a consistent structure
+    const result = purchasesSummary.map(item => ({
+      supplier: item.supplier,
+      total: item._sum.total || 0,
+      gas_5_5: item._sum.gas_5_5 || 0,
+      cyl_5_5: item._sum.cyl_5_5 || 0,
+      gas_12: item._sum.gas_12 || 0,
+      cyl_12: item._sum.cyl_12 || 0,
+      gas_25: item._sum.gas_25 || 0,
+      cyl_25: item._sum.cyl_25 || 0,
+      gas_35: item._sum.gas_35 || 0,
+      cyl_35: item._sum.cyl_35 || 0,
+      gas_45: item._sum.gas_45 || 0,
+      cyl_45: item._sum.cyl_45 || 0,
+    }));
+
+    return res.json(result);
+  } catch (error) {
+    console.error('Error fetching purchases summary:', error); // Log error for debugging
+    return res.status(500).json({ error: 'Error fetching purchases summary', details: error });
+  }
+});
+
+
+
+
 app.delete('/deleteEmployee/:id', async(req, res) => {
   try{
     const id = parseInt(req.params.id)
@@ -290,6 +471,82 @@ app.get('/getProduct', async(req, res) => {
     return res.status(500).json({ Error: 'Getting data error in server' });
   }
 })
+
+app.get('/sales', (req, res) => {
+    let startDate = req.query.from;
+    let endDate = req.query.to;
+    let customerName = req.query.customer;
+    
+    let sql = "SELECT * FROM sales WHERE 1=1"; // Adding WHERE 1=1 for dynamic query construction
+    
+    if (startDate && endDate) {
+        sql += ` AND date BETWEEN '${startDate}' AND '${endDate}'`;
+    }
+    
+    if (customerName) {
+        sql += ` AND customer_name LIKE '%${customerName}%'`; // Assuming partial match on customer name
+    }
+
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/purchases', (req, res) => {
+    let startDate = req.query.from;
+    let endDate = req.query.to;
+    let supplierName = req.query.supplier;
+    
+    let sql = "SELECT * FROM purchases WHERE 1=1"; // Adding WHERE 1=1 for dynamic query construction
+    
+    if (startDate && endDate) {
+        sql += ` AND date BETWEEN '${startDate}' AND '${endDate}'`;
+    }
+    
+    if (supplierName) {
+        sql += ` AND supplier LIKE '%${supplierName}%'`; // Assuming partial match on supplier name
+    }
+
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/sales_summary', (req, res) => {
+    let customerName = req.query.customer;
+    
+    let sql = "SELECT customer_name, SUM(total) as total, SUM(gas_5_5) as gas_5_5,SUM(cyl_5_5) as cyl_5_5,SUM(gas_12) as gas_12,SUM(cyl_12) as cyl_12,SUM(cyl_12) as cyl_12,SUM(gas_25) as gas_25,SUM(cyl_25) as cyl_25,SUM(gas_35) as gas_35,SUM(cyl_35) as cyl_35,SUM(gas_45) as gas_45,SUM(cyl_45) as cyl_45 FROM sales WHERE 1=1"; // Adding WHERE 1=1 for dynamic query construction
+    
+    if (customerName) {
+        sql += ` AND customer_name LIKE '%${customerName}%'`; // Assuming partial match on customer name
+    }
+
+    sql += ` GROUP BY customer_name`;
+
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get('/purchases_summary', (req, res) => {
+    let supplierName = req.query.supplier;
+    
+    let sql = "SELECT supplier, SUM(total) as total, SUM(gas_5_5) as gas_5_5,SUM(cyl_5_5) as cyl_5_5,SUM(gas_12) as gas_12,SUM(cyl_12) as cyl_12,SUM(cyl_12) as cyl_12,SUM(gas_25) as gas_25,SUM(cyl_25) as cyl_25,SUM(gas_35) as gas_35,SUM(cyl_35) as cyl_35,SUM(gas_45) as gas_45,SUM(cyl_45) as cyl_45 FROM purchases WHERE 1=1"; // Adding WHERE 1=1 for dynamic query construction
+    
+    if (supplierName) {
+        sql += ` AND supplier LIKE '%${supplierName}%'`; // Assuming partial match on customer name
+    }
+
+    sql += ` GROUP BY supplier`;
+
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
 
 app.post('/addPurchase', async(req, res) => {
   try{

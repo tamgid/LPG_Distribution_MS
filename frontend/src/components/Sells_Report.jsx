@@ -8,7 +8,7 @@ function Sells_Report() {
   const [customerName, setCustomerName] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8081/sales?from=${fromDate}&to=${toDate}&customer=${customerName}`)
+    fetch(`http://localhost:3001/sales?from=${fromDate}&to=${toDate}&customer=${customerName}`)
       .then((res) => res.json())
       .then((salesData) => setSalesData(salesData))
       .catch((err) => console.log(err));

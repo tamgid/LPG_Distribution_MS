@@ -88,7 +88,7 @@ function SideBar(props) {
                   to="/home/contactSupplier"
                   className="font"
                 >
-                  <i className="fa fa-fw fa-address-book-o"></i>Customer Contact
+                  <i className="fa fa-fw fa-address-book-o"></i>Supplier Contact
                 </NavLink>
                 
               </div>

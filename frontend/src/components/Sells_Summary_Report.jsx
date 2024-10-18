@@ -6,7 +6,7 @@ function Sells_Summary_Report() {
   const [customerName, setCustomerName] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8081/sales_summary?customer=${customerName}`)
+    fetch(`http://localhost:3001/sales_summary?customer=${customerName}`)
       .then((res) => res.json())
       .then((salesData) => setSalesData(salesData))
       .catch((err) => console.log(err));
